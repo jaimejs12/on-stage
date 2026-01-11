@@ -1,22 +1,60 @@
+"use client";
+
 import { motion } from "motion/react";
 import { Music2 } from "lucide-react";
 import { Button } from "./ui/button";
+import { supabase } from "@/lib/supabase-client";
+import { useState } from "react";
 
 interface LoginScreenProps {
   onLogin: () => void;
 }
 
 export function LoginScreen({ onLogin }: LoginScreenProps) {
-  const handleGoogleLogin = () => {
-    // Mock Google login - in production, this would integrate with Google OAuth
-    console.log("Login with Google");
-    onLogin();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        },
+      });
+
+      if (error) {
+        console.error("Google login error:", error);
+        alert(`Error: ${error.message}`);
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      alert("An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSpotifyLogin = () => {
-    // Mock Spotify login - in production, this would integrate with Spotify OAuth
-    console.log("Login with Spotify");
-    onLogin();
+  const handleSpotifyLogin = async () => {
+    try {
+      setIsLoading(true);
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "spotify",
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        },
+      });
+
+      if (error) {
+        console.error("Spotify login error:", error);
+        alert(`Error: ${error.message}`);
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      alert("An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -39,7 +77,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
               <Music2 className="w-10 h-10 text-background" />
             </div>
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -48,7 +86,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
           >
             onStage
           </motion.h1>
-          
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -69,7 +107,8 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
           {/* Google Login Button */}
           <Button
             onClick={handleGoogleLogin}
-            className="w-full h-14 bg-card hover:bg-secondary border border-border text-foreground transition-all duration-200 hover:border-primary/50"
+            disabled={isLoading}
+            className="w-full h-14 bg-card hover:bg-secondary border border-border text-foreground transition-all duration-200 hover:border-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
             variant="outline"
           >
             <svg
@@ -100,7 +139,8 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
           {/* Spotify Login Button */}
           <Button
             onClick={handleSpotifyLogin}
-            className="w-full h-14 bg-[#1DB954] hover:bg-[#1ed760] text-white transition-all duration-200 shadow-lg shadow-[#1DB954]/20 hover:shadow-[#1DB954]/30"
+            disabled={isLoading}
+            className="w-full h-14 bg-[#1DB954] hover:bg-[#1ed760] text-white transition-all duration-200 shadow-lg shadow-[#1DB954]/20 hover:shadow-[#1DB954]/30 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               className="w-5 h-5 mr-3"
@@ -125,6 +165,6 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
           <br />y Política de Privacidad
         </motion.p>
       </motion.div>
-    </div>
+    </div >
   );
 }
