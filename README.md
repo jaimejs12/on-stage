@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#  On Stage
 
-## Getting Started
+**On Stage** is a web & mobile-oriented application to track live concerts:
+- concerts you’ve attended
+- concerts you’re going to
+- concerts happening near you
+- concerts your friends are attending
 
-First, run the development server:
+Inspired by platforms like Letterboxd, On Stage focuses on **music discovery, memory, and social connection** around live events.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features (MVP)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-  Authentication via **Google** and **Spotify**
+-  Discover concerts near you
+-  Track:
+  - upcoming concerts
+  - past concerts
+-  See concerts your friends are attending
+-  Search concerts by:
+  - artist
+  - venue
+  - city
+  - date
+-  Add concerts manually if not found
+-  Use the app as a personal concert reminder
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend
+- **Next.js (App Router)**
+- **TypeScript**
+- **Tailwind CSS v4**
+- **Framer Motion**
+- **Radix UI**
+- **Lucide Icons**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Backend / Data
+- **Next.js API routes (initially)**
+- **Ticketmaster Discovery API** (primary provider)
+- **Spotify API** (personalization & enrichment)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> Database is intentionally not introduced at the very first stage to allow fast iteration and provider flexibility.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Design
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- UI designed in **Figma**
+- Components exported using **React + Tailwind**
+- Design system implemented via Tailwind tokens
+- Fonts loaded using `next/font`
