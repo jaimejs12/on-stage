@@ -1,24 +1,33 @@
 "use client";
 
 import { LoginScreen } from "./components/login-screen";
-import { useState } from "react";
+import { useAuth } from "@/lib/hooks/use-auth";
 
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuthenticated, isLoading, user, logout } = useAuth();
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+  // Prevent hydration mismatch
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-pulse">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={() => { }} />;
+  }
 
   return (
-    <>
-      {!isLoggedIn ? (
-        <LoginScreen onLogin={handleLogin} />
-      ) : (
-        <div className="flex items-center justify-center min-h-screen">
-          <p className="text-xl">Welcome!</p>
-        </div>
-      )}
-    </>
+    <div className="flex items-center justify-center min-h-screen flex-col gap-4">
+      <p className="text-xl">Welcome, {user?.email}!</p>
+      <button
+        onClick={logout}
+        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+      >
+        Logout
+      </button>
+    </div>
   );
 }
