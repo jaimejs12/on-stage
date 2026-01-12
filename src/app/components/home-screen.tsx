@@ -112,7 +112,7 @@ export function HomeScreen() {
           {concerts.map((concert) => (
             <div
               key={concert.id}
-              className="flex-shrink-0 w-[280px] snap-start"
+              className="shrink-0 w-70 snap-start"
             >
               <ConcertCard
                 {...concert}

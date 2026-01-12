@@ -1,6 +1,7 @@
 "use client";
 
 import { LoginScreen } from "./components/login-screen";
+import { HomeScreen } from "./components/home-screen";
 import { useAuth } from "@/lib/hooks/use-auth";
 
 export default function Home() {
@@ -19,15 +20,5 @@ export default function Home() {
     return <LoginScreen onLogin={() => { }} />;
   }
 
-  return (
-    <div className="flex items-center justify-center min-h-screen flex-col gap-4">
-      <p className="text-xl">Welcome, {user?.email}!</p>
-      <button
-        onClick={logout}
-        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-      >
-        Logout
-      </button>
-    </div>
-  );
+  return <HomeScreen />;
 }
